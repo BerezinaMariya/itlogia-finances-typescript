@@ -1,0 +1,92 @@
+@import "fonts";
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: auto;
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  min-width: 320px;
+  color: #052C65;
+}
+
+// layout
+
+.menu-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.menu {
+  width: 218px;
+
+  .brand-link {
+    border-bottom: 1px solid #D9D9D9;
+  }
+
+  .menu-close {
+    width: 20px;
+    height: 20px;
+  }
+
+  .nav.nav-pills {
+    .nav-item .nav-link {
+      color: #052C65;
+      font-size: 14px;
+
+      &.active {
+        color: white;
+
+        svg path {
+          fill: white;
+        }
+      }
+    }
+  }
+
+  .user-panel {
+    border-top: 1px solid #D9D9D9;
+  }
+}
+
+.content-wrapper {
+  padding: 100px 60px 0 279px;
+  max-width: 1300px;
+}
+
+// main
+.tabs {
+  .tab-item {
+    .btn.btn-outline-secondary {
+      width: 100px;
+    }
+
+    &.datepicker input {
+      text-decoration-skip-ink: none;
+      width: 63px;
+    }
+  }
+}
+
+.chart-container {
+  box-sizing: content-box;
+  width: 1045px;
+  height: 467px;
+
+  .line {
+    border-left: 1px solid #D9D9D9;
+    height: 450px;
+    margin-top: 57px;
+    margin-right: 54px;
+    margin-left: 54px;
+  }
+}
+
+@import "accordion";
+@import "auth";
+@import "operations";
+@import "adaptive";

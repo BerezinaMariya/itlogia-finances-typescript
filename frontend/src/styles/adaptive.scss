@@ -1,0 +1,92 @@
+@media screen and (max-width: 1399px) {
+    .content-wrapper {
+        padding-left: 239px;
+        padding-right: 20px;
+    }
+
+    .chart-container {
+        width: 915px;
+        height: 437px;
+
+        .line {
+            margin-right: 20px;
+            margin-left: 20px;
+        }
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    .chart-container {
+        width: 437px;
+        height: 875px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    table {
+        border: 0;
+
+        thead {
+            display: none;
+        }
+
+        tr {
+            display: block;
+            border-bottom: 2px solid #DEE2E6;
+
+            td {
+                display: block;
+                min-height: 40px;
+                text-align: right;
+                border-bottom: 1px solid #DEE2E6;
+                border-right: 1px solid transparent;
+
+                &:first-child {
+                    border-top: 2px solid #DEE2E6;
+                }
+
+                &:last-child {
+                    border-bottom: 0;
+                }
+
+                &:before {
+                    content: attr(data-label);
+                    float: left;
+                    letter-spacing: 1.33px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .menu {
+        z-index: 100;
+    }
+
+    .content-wrapper {
+        padding-left: 20px;
+    }
+}
+
+@media screen and (max-width: 539px) {
+    .chart-container {
+        height: 800px;
+        width: 400px;
+
+        .chart img {
+            object-fit: contain;
+        }
+    }
+}
+
+@media screen and (max-width: 419px) {
+    .chart-container {
+        height: 560px;
+        width: 280px;
+    }
+
+    .form-auth {
+        min-width: 260px;
+    }
+}

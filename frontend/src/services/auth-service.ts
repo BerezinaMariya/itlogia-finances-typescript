@@ -1,7 +1,7 @@
 import {HttpUtils} from "../utils/http-utils";
 import {LoginResponseType} from "../types/login-response.type";
 import {SignupResponseType} from "../types/signup-response.type";
-import {HttpRequestType} from "../types/http-request.type";
+import {HttpResponseType} from "../types/http-response.type";
 
 export class AuthService {
     public static async logIn(data: {
@@ -9,7 +9,7 @@ export class AuthService {
         password: string,
         rememberMe: boolean
     }): Promise<LoginResponseType | boolean> {
-        const result: HttpRequestType = await HttpUtils.request('/login', 'POST', false, data);
+        const result: HttpResponseType = await HttpUtils.request('/login', 'POST', false, data);
 
         if (result.error || !result.response || (result.response && (!result.response.tokens.accessToken || !result.response.tokens.refreshToken || !result.response.user.id || !result.response.user.name || !result.response.user.lastName))) {
             return false;
@@ -25,7 +25,7 @@ export class AuthService {
         password: string,
         passwordRepeat: string
     }): Promise<SignupResponseType | boolean> {
-        const result: HttpRequestType = await HttpUtils.request('/signup', 'POST', false, data);
+        const result: HttpResponseType = await HttpUtils.request('/signup', 'POST', false, data);
 
         if (result.error || !result.response || (result.response && (!result.response.user.id || !result.response.user.name || !result.response.user.lastName))) {
             return false;

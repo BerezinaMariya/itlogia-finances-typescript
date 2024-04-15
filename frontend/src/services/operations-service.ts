@@ -7,7 +7,7 @@ import {
     OperationType
 } from "../types/operations.type";
 import {DateResponseType} from "../types/date-response.type";
-import {HttpRequestType} from "../types/http-request.type";
+import {HttpResponseType} from "../types/http-response.type";
 
 export class OperationsService {
     public static async getOperations(date: DateResponseType): Promise<OperationsType> {
@@ -25,7 +25,7 @@ export class OperationsService {
             responseDate = '?period=interval&dateFrom=' + date.interval.from + '&dateTo=' + date.interval.to;
         }
 
-        const result: HttpRequestType = await HttpUtils.request('/operations' + responseDate);
+        const result: HttpResponseType = await HttpUtils.request('/operations' + responseDate);
 
         if (result.redirect || result.error || !result.response || (result.response && result.response.error)) {
             returnObject.error = 'Возникла ошибка при запросе доходов/расходов. Обратитесь в поддержку';
@@ -46,7 +46,7 @@ export class OperationsService {
             operation: null
         };
 
-        const result: HttpRequestType = await HttpUtils.request('/operations/' + id);
+        const result: HttpResponseType = await HttpUtils.request('/operations/' + id);
 
         if (result.redirect || result.error || !result.response || (result.response && result.response.error)) {
             returnObject.error = 'Возникла ошибка при запросе дохода/расхода. Обратитесь в поддержку';
@@ -67,7 +67,7 @@ export class OperationsService {
             id: null
         };
 
-        const result: HttpRequestType = await HttpUtils.request('/operations', 'POST', true, data);
+        const result: HttpResponseType = await HttpUtils.request('/operations', 'POST', true, data);
 
         if (result.redirect || result.error || !result.response || (result.response && result.response.error)) {
             returnObject.error = 'Возникла ошибка при добавлении дохода/расхода. Обратитесь в поддержку';
@@ -87,7 +87,7 @@ export class OperationsService {
             redirect: null
         };
 
-        const result: HttpRequestType = await HttpUtils.request('/operations/' + id, 'PUT', true, data);
+        const result: HttpResponseType = await HttpUtils.request('/operations/' + id, 'PUT', true, data);
 
         if (result.redirect || result.error || !result.response || (result.response && result.response.error)) {
             returnObject.error = 'Возникла ошибка при редактировании дохода/расхода. Обратитесь в поддержку';
@@ -106,7 +106,7 @@ export class OperationsService {
             redirect: null
         };
 
-        const result: HttpRequestType = await HttpUtils.request('/operations/' + id, 'DELETE', true);
+        const result: HttpResponseType = await HttpUtils.request('/operations/' + id, 'DELETE', true);
 
         if (result.redirect || result.error || !result.response || (result.response && result.response.error)) {
             returnObject.error = 'Возникла ошибка при удалении дохода/расхода. Обратитесь в поддержку';

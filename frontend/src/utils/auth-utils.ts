@@ -1,6 +1,6 @@
 import config from "../config/config";
 import {UserInfoType} from "../types/user-info.type";
-import {RefreshResponseType} from "../types/refresh-response.type";
+import {RefreshResponseType, TokensType} from "../types/tokens.type";
 import {DefaultResponseType} from "../types/default-response.type";
 
 export class AuthUtils {
@@ -26,11 +26,6 @@ export class AuthUtils {
         if (key && [this.accessTokenKey, this.refreshTokenKey, this.userInfoKey].includes(key)) {
             return localStorage.getItem(key);
         } else {
-            // return {
-            //     [this.accessTokenKey]: localStorage.getItem(this.accessTokenKey),
-            //     [this.refreshTokenKey]: localStorage.getItem(this.refreshTokenKey),
-            //     [this.userInfoKey]: localStorage.getItem(this.userInfoKey)
-            // }
             return null;
         }
     }
@@ -56,7 +51,7 @@ export class AuthUtils {
                     throw new Error((result as DefaultResponseType).message);
                 }
 
-                const tokens = (result as RefreshResponseType).tokens;
+                const tokens: TokensType = (result as RefreshResponseType).tokens;
 
                 if (tokens && tokens.accessToken && tokens.refreshToken) {
                     this.setAuthInfo(tokens.accessToken, tokens.refreshToken);

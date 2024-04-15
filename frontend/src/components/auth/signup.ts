@@ -76,13 +76,13 @@ export class Signup {
                         email: this.emailElement.value,
                         password: this.passwordElement.value,
                         rememberMe: false
-                    });
+                    }) as LoginResponseType;
 
                     if (loginResult) {
-                        AuthUtils.setAuthInfo((loginResult as LoginResponseType).tokens.accessToken, (loginResult as LoginResponseType).tokens.refreshToken, {
-                            id: (loginResult as LoginResponseType).user.id,
-                            name: (loginResult as LoginResponseType).user.name,
-                            lastName: (loginResult as LoginResponseType).user.lastName
+                        AuthUtils.setAuthInfo(loginResult.tokens.accessToken, loginResult.tokens.refreshToken, {
+                            id: loginResult.user.id,
+                            name: loginResult.user.name,
+                            lastName: loginResult.user.lastName
                         });
                     }
 

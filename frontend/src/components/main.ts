@@ -8,8 +8,8 @@ import {DateResponseType} from "../types/date-response.type";
 export class Main {
     readonly openNewRoute: (url: string) => Promise<void>;
     private filterButtons: NodeListOf<HTMLElement> | null = null;
-    private startDateInputElement: HTMLElement | null = null;
-    private endDateInputElement: HTMLElement | null = null;
+    private startDateInputElement: HTMLInputElement | null = null;
+    private endDateInputElement: HTMLInputElement | null = null;
     private incomeChart: Chart | undefined;
     private expenseChart: Chart | undefined;
     private incomeSectorValues: number[] = [];
@@ -30,38 +30,40 @@ export class Main {
 
     private findElements(): void {
         this.filterButtons = document.querySelectorAll('.filter-btn');
-        this.startDateInputElement = document.getElementById('start-date-input');
-        this.endDateInputElement = document.getElementById('end-date-input');
+        this.startDateInputElement = document.getElementById('start-date-input') as HTMLInputElement | null;
+        this.endDateInputElement = document.getElementById('end-date-input') as HTMLInputElement | null;
     }
 
     private init(): void {
         if (!this.filterButtons || !this.startDateInputElement || !this.endDateInputElement) return;
 
-        const inputs: HTMLInputElement[] = [this.startDateInputElement as HTMLInputElement, this.endDateInputElement as HTMLInputElement];
+        if (this.startDateInputElement as HTMLInputElement && this.endDateInputElement as HTMLInputElement) {
+            const inputs: HTMLInputElement[] = [this.startDateInputElement, this.endDateInputElement];
 
-        this.filterButtons.forEach((button: HTMLElement) => {
-            button.addEventListener('click', (e: MouseEvent) => {
-                this.getOperations(DateFilterUtils.toggleFilterButtonsHandler(e, this.filterButtons as NodeListOf<HTMLElement>, inputs)).then();
+            this.filterButtons.forEach((button: HTMLElement) => {
+                button.addEventListener('click', (e: MouseEvent) => {
+                    this.getOperations(DateFilterUtils.toggleFilterButtonsHandler(e, this.filterButtons!, inputs)).then();
+                });
             });
-        });
 
-        inputs.forEach((input: HTMLInputElement) => {
-            input.addEventListener('change', (e: Event) => {
-                if ((this.startDateInputElement as HTMLInputElement).value && (this.endDateInputElement as HTMLInputElement).value
-                    && parseInt((this.startDateInputElement as HTMLInputElement).value[0]) !== 0
-                    && parseInt((this.endDateInputElement as HTMLInputElement).value[0]) !== 0) {
-                    this.filterButtons?.forEach((button: HTMLElement) => {
-                        button.classList.remove('active');
-                    });
-                    this.getOperations({
-                        interval: {
-                            from: (this.startDateInputElement as HTMLInputElement).value,
-                            to: (this.endDateInputElement as HTMLInputElement).value
-                        }
-                    }).then();
-                }
+            inputs.forEach((input: HTMLInputElement) => {
+                input.addEventListener('change', (e: Event) => {
+                    if (this.startDateInputElement!.value && this.endDateInputElement!.value
+                        && parseInt(this.startDateInputElement!.value[0]) !== 0
+                        && parseInt(this.endDateInputElement!.value[0]) !== 0) {
+                        this.filterButtons?.forEach((button: HTMLElement) => {
+                            button.classList.remove('active');
+                        });
+                        this.getOperations({
+                            interval: {
+                                from: this.startDateInputElement!.value,
+                                to: this.endDateInputElement!.value
+                            }
+                        }).then();
+                    }
+                });
             });
-        });
+        }
     }
 
     private initCanvases(): void {

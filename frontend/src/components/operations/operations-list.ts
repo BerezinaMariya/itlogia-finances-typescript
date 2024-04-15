@@ -29,33 +29,35 @@ export class OperationsList {
     }
 
     private init(): void {
-        if (!this.filterButtons || !this.startDateInputElement || !this.endDateInputElement) return;
+        if (!this.filterButtons || !(this.startDateInputElement) || !(this.endDateInputElement)) return;
 
-        const inputs: HTMLInputElement[] = [this.startDateInputElement as HTMLInputElement, this.endDateInputElement as HTMLInputElement];
+        if (this.startDateInputElement as HTMLInputElement && this.endDateInputElement as HTMLInputElement) {
+            const inputs: HTMLInputElement[] = [this.startDateInputElement, this.endDateInputElement];
 
-        this.filterButtons.forEach((button: HTMLElement) => {
-            button.addEventListener('click', (e: MouseEvent) => {
-                this.getOperations(DateFilterUtils.toggleFilterButtonsHandler(e, this.filterButtons as NodeListOf<HTMLElement>, inputs)).then();
+            this.filterButtons.forEach((button: HTMLElement) => {
+                button.addEventListener('click', (e: MouseEvent) => {
+                    this.getOperations(DateFilterUtils.toggleFilterButtonsHandler(e, this.filterButtons!, inputs)).then();
+                });
             });
-        });
 
-        inputs.forEach((input: HTMLInputElement) => {
-            input.addEventListener('change', (e: Event) => {
-                if ((this.startDateInputElement as HTMLInputElement).value && (this.endDateInputElement as HTMLInputElement).value
-                    && parseInt((this.startDateInputElement as HTMLInputElement).value[0]) !== 0
-                    && parseInt((this.endDateInputElement as HTMLInputElement).value[0]) !== 0) {
-                    this.filterButtons?.forEach((button: HTMLElement) => {
-                        button.classList.remove('active');
-                    });
-                    this.getOperations({
-                        interval: {
-                            from: (this.startDateInputElement as HTMLInputElement).value,
-                            to: (this.endDateInputElement as HTMLInputElement).value
-                        }
-                    }).then();
-                }
+            inputs.forEach((input: HTMLInputElement) => {
+                input.addEventListener('change', (e: Event) => {
+                    if (this.startDateInputElement!.value && this.endDateInputElement!.value
+                        && parseInt(this.startDateInputElement!.value[0]) !== 0
+                        && parseInt(this.endDateInputElement!.value[0]) !== 0) {
+                        this.filterButtons?.forEach((button: HTMLElement) => {
+                            button.classList.remove('active');
+                        });
+                        this.getOperations({
+                            interval: {
+                                from: this.startDateInputElement!.value,
+                                to: this.endDateInputElement!.value
+                            }
+                        }).then();
+                    }
+                });
             });
-        });
+        }
     }
 
     public async getOperations(date: DateResponseType): Promise<void | null> {

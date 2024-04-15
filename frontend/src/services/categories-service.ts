@@ -2,7 +2,7 @@ import {HttpUtils} from "../utils/http-utils";
 import {
     CategoriesType, CategoryCreateType, CategoryGetType, CategoryType
 } from "../types/categories.type";
-import {HttpRequestType} from "../types/http-request.type";
+import {HttpResponseType} from "../types/http-response.type";
 
 export class CategoriesService {
     public static async getCategories(category: string): Promise<CategoriesType> {
@@ -12,7 +12,7 @@ export class CategoriesService {
             categories: []
         };
 
-        const result: HttpRequestType = await HttpUtils.request('/categories/' + category);
+        const result: HttpResponseType = await HttpUtils.request('/categories/' + category);
 
         if (result.redirect || result.error || !result.response || (result.response && result.response.error)) {
             returnObject.error = 'Возникла ошибка при запросе категорий. Обратитесь в поддержку';
@@ -33,7 +33,7 @@ export class CategoriesService {
             category: null
         };
 
-        const result: HttpRequestType = await HttpUtils.request('/categories/' + category + '/' + id);
+        const result: HttpResponseType = await HttpUtils.request('/categories/' + category + '/' + id);
 
         if (result.redirect || result.error || !result.response || (result.response && result.response.error)) {
             returnObject.error = 'Возникла ошибка при запросе категории. Обратитесь в поддержку';
@@ -54,7 +54,7 @@ export class CategoriesService {
             id: null
         };
 
-        const result: HttpRequestType = await HttpUtils.request('/categories/' + category, 'POST', true, data);
+        const result: HttpResponseType = await HttpUtils.request('/categories/' + category, 'POST', true, data);
 
         if (result.redirect || result.error || !result.response || (result.response && result.response.error)) {
             returnObject.error = 'Возникла ошибка при добавлении категории. Обратитесь в поддержку';
@@ -74,7 +74,7 @@ export class CategoriesService {
             redirect: null
         };
 
-        const result: HttpRequestType = await HttpUtils.request('/categories/' + category + '/' + id, 'PUT', true, data);
+        const result: HttpResponseType = await HttpUtils.request('/categories/' + category + '/' + id, 'PUT', true, data);
 
         if (result.redirect || result.error || !result.response || (result.response && result.response.error)) {
             returnObject.error = 'Возникла ошибка при редактировании категории. Обратитесь в поддержку';
@@ -93,7 +93,7 @@ export class CategoriesService {
             redirect: null
         };
 
-        const result: HttpRequestType = await HttpUtils.request('/categories/' + category + '/' + id, 'DELETE', true);
+        const result: HttpResponseType = await HttpUtils.request('/categories/' + category + '/' + id, 'DELETE', true);
 
         if (result.redirect || result.error || !result.response || (result.response && result.response.error)) {
             returnObject.error = 'Возникла ошибка при удалении категории. Обратитесь в поддержку';

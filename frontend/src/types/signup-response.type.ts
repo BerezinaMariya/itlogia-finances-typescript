@@ -1,8 +1,5 @@
+import {UserInfoType} from "./user-info.type";
+
 export type SignupResponseType = {
-    user: {
-        id: number,
-        email: string,
-        name: string,
-        lastName: string
-    }
+    user: UserInfoType & { email: string }
 }
